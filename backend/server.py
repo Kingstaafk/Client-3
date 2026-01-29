@@ -412,10 +412,13 @@ async def create_sell_request(request_input: SellJewelleryCreate, current_user: 
     purity = request_input.purity
     estimated_value = request_input.weight * base_rate_per_gram.get(purity, 3000)
     
+    # Create the sell object with calculated estimated value
+    request_data = request_input.model_dump()
+    request_data['estimated_value'] = estimated_value
+    
     sell_obj = SellJewellery(
-        **request_input.model_dump(),
-        user_id=current_user.id,
-        estimated_value=estimated_value
+        **request_data,
+        user_id=current_user.id
     )
     
     doc = sell_obj.model_dump()
