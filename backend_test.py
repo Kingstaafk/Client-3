@@ -171,7 +171,12 @@ class JewelleryStoreAPITester:
             200
         )
         
-        if success and isinstance(response, list):
+        if success and isinstance(response, list) and len(response) > 0:
+            # Use the first product for testing
+            self.created_product_id = response[0]['id']
+            self.log_result("Products List Check", True, f"Found {len(response)} products, using first product ID: {self.created_product_id}")
+            return True
+        elif success and isinstance(response, list):
             self.log_result("Products List Check", len(response) > 0, f"Found {len(response)} products")
             return len(response) > 0
         return False
