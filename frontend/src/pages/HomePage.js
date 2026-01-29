@@ -72,7 +72,7 @@ const HomePage = () => {
   return (
     <div className="bg-white" data-testid="home-page">
       {/* Hero Section */}
-      <section className="relative h-[600px] md:h-[700px] overflow-hidden">
+      <section className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1522001947148-8b4dfe064edc"
           alt="Luxury Jewellery"
@@ -80,19 +80,19 @@ const HomePage = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
         <div className="relative max-w-7xl mx-auto px-4 md:px-8 h-full flex items-center">
-          <div className="max-w-2xl space-y-6">
-            <h1 className="text-5xl md:text-7xl font-serif tracking-tight text-white font-medium leading-tight" data-testid="hero-title">
+          <div className="max-w-2xl space-y-4 md:space-y-6">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif tracking-tight text-white font-medium leading-tight" data-testid="hero-title">
               Timeless Elegance
               <br />
               <span className="text-[#D4AF37]">Crafted for You</span>
             </h1>
-            <p className="text-base md:text-lg font-sans leading-relaxed text-white/90">
+            <p className="text-sm md:text-base lg:text-lg font-sans leading-relaxed text-white/90">
               Discover our exclusive collection of handcrafted jewellery, where tradition meets luxury.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-4">
               <Link to="/products">
                 <Button
-                  className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-8 py-6 transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-xs font-bold"
+                  className="w-full sm:w-auto bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-6 md:px-8 py-5 md:py-6 transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-xs font-bold"
                   data-testid="explore-collection-button"
                 >
                   Explore Collection
@@ -101,7 +101,7 @@ const HomePage = () => {
               <Link to="/sell">
                 <Button
                   variant="outline"
-                  className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1A1A1A] rounded-full px-8 py-6 transition-all duration-300 uppercase tracking-widest text-xs font-bold"
+                  className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1A1A1A] rounded-full px-6 md:px-8 py-5 md:py-6 transition-all duration-300 uppercase tracking-widest text-xs font-bold"
                   data-testid="sell-jewellery-button"
                 >
                   Sell Your Jewellery
