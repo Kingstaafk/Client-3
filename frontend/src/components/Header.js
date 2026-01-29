@@ -158,6 +158,14 @@ const Header = () => {
               <Link to="/cart" data-testid="cart-link">
                 <Button variant="ghost" size="icon" className="relative h-9 w-9 md:h-10 md:w-10">
                   <ShoppingCart className="h-5 w-5 text-[#1A1A1A]" />
+                  {cartCount > 0 && (
+                    <span 
+                      className="absolute -top-1 -right-1 bg-[#D4AF37] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                      data-testid="cart-count-badge"
+                    >
+                      {cartCount > 9 ? '9+' : cartCount}
+                    </span>
+                  )}
                 </Button>
               </Link>
 
