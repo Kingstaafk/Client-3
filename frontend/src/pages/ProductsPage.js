@@ -132,6 +132,32 @@ const ProductsPage = () => {
     }
   };
 
+  const handleAddToCart = async (productId) => {
+    if (!token) {
+      toast.error("Please login to add items to cart");
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await axios.post(
+        `${API}/cart`,
+        { product_id: productId, quantity: 1 },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      toast.success("Added to cart successfully!");
+    } catch (error) {
+      console.error("Failed to add to cart:", error);
+      toast.error("Failed to add to cart");
+    }
+  };
+
+  const handleQuickView = (product) => {
+    setQuickViewProduct(product);
+  };
+
   return (
     <div className="min-h-screen bg-white" data-testid="products-page">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
