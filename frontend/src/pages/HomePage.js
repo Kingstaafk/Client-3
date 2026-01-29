@@ -233,17 +233,17 @@ const HomePage = () => {
       )}
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-[#F9F9F7]">
+      <section className="py-12 md:py-16 lg:py-24 bg-[#F9F9F7]">
         <div className="max-w-4xl mx-auto px-4 md:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-serif tracking-tight text-[#1A1A1A] mb-6" data-testid="cta-title">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif tracking-tight text-[#1A1A1A] mb-4 md:mb-6" data-testid="cta-title">
             Have Old Jewellery?
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground mb-8">
+          <p className="text-sm md:text-base lg:text-lg text-muted-foreground mb-6 md:mb-8">
             Get the best value for your precious jewellery. Our experts provide fair and transparent valuations.
           </p>
           <Link to="/sell">
             <Button
-              className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-8 py-6 transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-xs font-bold"
+              className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-6 md:px-8 py-5 md:py-6 transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-xs font-bold"
               data-testid="sell-now-button"
             >
               Sell Now
