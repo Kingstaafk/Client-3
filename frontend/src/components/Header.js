@@ -16,10 +16,36 @@ const Header = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Close menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [navigate]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   const handleLogout = () => {
     logout();
     navigate("/");
   };
+
+  const menuItems = [
+    { label: "Home", path: "/", icon: Home },
+    { label: "All Products", path: "/products", icon: ShoppingBag },
+    { label: "Gold Collection", path: "/products?subcategory=gold", icon: Sparkles },
+    { label: "Diamond Collection", path: "/products?subcategory=diamond", icon: Gem },
+    { label: "Silver Collection", path: "/products?subcategory=silver", icon: CircleDollarSign },
+    { label: "Sell Jewellery", path: "/sell", icon: CircleDollarSign },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#E5E5E5] shadow-sm">
