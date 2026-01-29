@@ -175,38 +175,91 @@ const ProductsPage = () => {
         </div>
 
         {/* Filters */}
-        <div className="mb-8 flex flex-wrap gap-4">
-          <Select
-            value={filters.category}
-            onValueChange={(value) => setFilters({ ...filters, category: value })}
-          >
-            <SelectTrigger className="w-[180px] bg-[#F9F9F7]" data-testid="category-filter">
-              <SelectValue placeholder="Category" />
-            </SelectTrigger>
-            <SelectContent className="bg-white">
-              <SelectItem value=" ">All Categories</SelectItem>
-              <SelectItem value="ring">Rings</SelectItem>
-              <SelectItem value="necklace">Necklaces</SelectItem>
-              <SelectItem value="earrings">Earrings</SelectItem>
-              <SelectItem value="bracelet">Bracelets</SelectItem>
-              <SelectItem value="bangles">Bangles</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="mb-8">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Left: Category & Metal Filters */}
+            <div className="flex flex-wrap gap-4">
+              <Select
+                value={filters.category}
+                onValueChange={(value) => setFilters({ ...filters, category: value })}
+              >
+                <SelectTrigger className="w-[180px] bg-[#F9F9F7]" data-testid="category-filter">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectItem value=" ">All Categories</SelectItem>
+                  <SelectItem value="ring">Rings</SelectItem>
+                  <SelectItem value="necklace">Necklaces</SelectItem>
+                  <SelectItem value="earrings">Earrings</SelectItem>
+                  <SelectItem value="bracelet">Bracelets</SelectItem>
+                  <SelectItem value="bangles">Bangles</SelectItem>
+                </SelectContent>
+              </Select>
 
-          <Select
-            value={filters.subcategory}
-            onValueChange={(value) => setFilters({ ...filters, subcategory: value })}
-          >
-            <SelectTrigger className="w-[180px] bg-[#F9F9F7]" data-testid="subcategory-filter">
-              <SelectValue placeholder="Metal" />
-            </SelectTrigger>
-            <SelectContent className="bg-white">
-              <SelectItem value=" ">All Metals</SelectItem>
-              <SelectItem value="gold">Gold</SelectItem>
-              <SelectItem value="diamond">Diamond</SelectItem>
-              <SelectItem value="silver">Silver</SelectItem>
-            </SelectContent>
-          </Select>
+              <Select
+                value={filters.subcategory}
+                onValueChange={(value) => setFilters({ ...filters, subcategory: value })}
+              >
+                <SelectTrigger className="w-[180px] bg-[#F9F9F7]" data-testid="subcategory-filter">
+                  <SelectValue placeholder="Metal" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectItem value=" ">All Metals</SelectItem>
+                  <SelectItem value="gold">Gold</SelectItem>
+                  <SelectItem value="diamond">Diamond</SelectItem>
+                  <SelectItem value="silver">Silver</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-[180px] bg-[#F9F9F7]" data-testid="sort-filter">
+                  <SelectValue placeholder="Sort By" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  <SelectItem value="newest">Newest First</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="name-asc">Name: A to Z</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Right: Price Range Filter */}
+            <div className="flex-1 lg:max-w-md">
+              <div className="bg-[#F9F9F7] p-4 rounded-sm">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-medium text-[#1A1A1A]">Price Range</span>
+                  <span className="text-sm text-muted-foreground" data-testid="price-range-display">
+                    ₹{priceRange[0].toLocaleString()} - ₹{priceRange[1].toLocaleString()}
+                  </span>
+                </div>
+                <Slider
+                  value={priceRange}
+                  onValueChange={setPriceRange}
+                  max={maxPrice}
+                  step={1000}
+                  className="w-full"
+                  data-testid="price-range-slider"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Active Filters Summary */}
+          <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+            <span>Showing {filteredProducts.length} products</span>
+            {(filters.category || filters.subcategory || filters.search) && (
+              <button
+                onClick={() => {
+                  setFilters({ category: "", subcategory: "", search: "" });
+                  navigate("/products");
+                }}
+                className="text-[#D4AF37] hover:underline"
+              >
+                Clear all filters
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Products Grid */}
