@@ -248,20 +248,43 @@ const Header = () => {
 
           {/* Menu Items */}
           <nav className="flex-1 overflow-y-auto py-4">
-            <div className="space-y-1 px-3">
-              {menuItems.map((item, index) => (
-                <Link
-                  key={index}
-                  to={item.path}
-                  className="flex items-center space-x-3 px-4 py-3 rounded-lg text-[#1A1A1A] hover:bg-[#F9F9F7] hover:text-[#D4AF37] transition-all duration-200 group"
-                  onClick={() => setMobileMenuOpen(false)}
-                  data-testid={`mobile-menu-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
-                >
-                  <item.icon className="h-5 w-5 text-[#D4AF37] group-hover:scale-110 transition-transform" />
-                  <span className="font-medium text-sm">{item.label}</span>
-                </Link>
-              ))}
+            {/* Search Bar */}
+            <div className="px-4 mb-6">
+              <form onSubmit={handleSearch} className="relative">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full px-4 py-3 pl-10 bg-[#F9F9F7] border border-transparent focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] rounded-lg text-sm transition-all"
+                  data-testid="sidebar-search-input"
+                />
+                <ShoppingBag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              </form>
             </div>
+
+            {/* Grouped Menu Sections */}
+            {menuSections.map((section, sectionIndex) => (
+              <div key={sectionIndex} className="mb-6">
+                <h3 className="px-7 mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                  {section.title}
+                </h3>
+                <div className="space-y-1 px-3">
+                  {section.items.map((item, index) => (
+                    <Link
+                      key={index}
+                      to={item.path}
+                      className="flex items-center space-x-3 px-4 py-3 rounded-lg text-[#1A1A1A] hover:bg-[#F9F9F7] hover:text-[#D4AF37] transition-all duration-200 group"
+                      onClick={() => setMobileMenuOpen(false)}
+                      data-testid={`mobile-menu-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <item.icon className="h-5 w-5 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                      <span className="font-medium text-sm">{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
           </nav>
 
           {/* Sidebar Footer */}
