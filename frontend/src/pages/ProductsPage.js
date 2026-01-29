@@ -267,13 +267,23 @@ const ProductsPage = () => {
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D4AF37]"></div>
           </div>
-        ) : products.length === 0 ? (
+        ) : filteredProducts.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-xl text-muted-foreground">No products found</p>
+            <p className="text-xl text-muted-foreground mb-4">No products found</p>
+            <Button
+              onClick={() => {
+                setFilters({ category: "", subcategory: "", search: "" });
+                setPriceRange([0, maxPrice]);
+                navigate("/products");
+              }}
+              className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full"
+            >
+              Clear Filters
+            </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="product-card cursor-pointer"
@@ -293,13 +303,28 @@ const ProductsPage = () => {
                   >
                     <Heart className="h-5 w-5" />
                   </button>
-                  <button
-                    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-[#D4AF37] text-white px-6 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 uppercase tracking-widest text-xs font-bold"
-                    onClick={() => navigate(`/products/${product.id}`)}
-                    data-testid={`quick-view-${product.id}`}
-                  >
-                    Quick View
-                  </button>
+                  
+                  {/* Quick View & Add to Cart buttons on hover */}
+                  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex gap-2">
+                      <button
+                        className="flex-1 bg-white text-[#1A1A1A] px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#D4AF37] hover:text-white transition-all duration-200 flex items-center justify-center gap-2"
+                        onClick={() => handleQuickView(product)}
+                        data-testid={`quick-view-${product.id}`}
+                      >
+                        <Eye className="h-4 w-4" />
+                        Quick View
+                      </button>
+                      <button
+                        className="flex-1 bg-[#D4AF37] text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#C5A059] transition-all duration-200 flex items-center justify-center gap-2"
+                        onClick={() => handleAddToCart(product.id)}
+                        data-testid={`add-cart-${product.id}`}
+                      >
+                        <ShoppingCart className="h-4 w-4" />
+                        Add
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div className="p-4">
                   <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
@@ -315,6 +340,99 @@ const ProductsPage = () => {
             ))}
           </div>
         )}
+
+        {/* Quick View Modal */}
+        <Dialog open={!!quickViewProduct} onOpenChange={(open) => !open && setQuickViewProduct(null)}>
+          <DialogContent className="max-w-4xl bg-white max-h-[90vh] overflow-y-auto">
+            {quickViewProduct && (
+              <>
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-serif text-[#1A1A1A]">
+                    {quickViewProduct.name}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                  {/* Image */}
+                  <div className="relative overflow-hidden rounded-sm">
+                    <img
+                      src={quickViewProduct.image_url}
+                      alt={quickViewProduct.name}
+                      className="w-full h-96 object-cover"
+                    />
+                  </div>
+
+                  {/* Details */}
+                  <div className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                      {quickViewProduct.subcategory} • {quickViewProduct.category}
+                    </p>
+                    <p className="text-base text-[#1A1A1A]">{quickViewProduct.description}</p>
+
+                    {/* Price Breakdown */}
+                    <div className="bg-[#F9F9F7] p-4 rounded-sm space-y-2">
+                      <h4 className="font-serif text-[#1A1A1A] mb-3">Price Breakdown</h4>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Metal Price</span>
+                        <span className="font-medium">₹{quickViewProduct.metal_price.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Making Charges</span>
+                        <span className="font-medium">₹{quickViewProduct.making_charges.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">GST (3%)</span>
+                        <span className="font-medium">₹{quickViewProduct.gst.toLocaleString()}</span>
+                      </div>
+                      <div className="border-t border-[#E5E5E5] pt-2 flex justify-between">
+                        <span className="font-serif text-[#1A1A1A]">Total Price</span>
+                        <span className="text-xl font-bold text-[#D4AF37]">
+                          ₹{quickViewProduct.total_price.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Specifications */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Weight</p>
+                        <p className="font-medium text-[#1A1A1A]">{quickViewProduct.weight}g</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Purity</p>
+                        <p className="font-medium text-[#1A1A1A]">{quickViewProduct.purity}</p>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex gap-3 pt-4">
+                      <Button
+                        onClick={() => {
+                          handleAddToCart(quickViewProduct.id);
+                          setQuickViewProduct(null);
+                        }}
+                        className="flex-1 bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full py-6"
+                        data-testid="quick-view-add-cart"
+                      >
+                        Add to Cart
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          navigate(`/products/${quickViewProduct.id}`);
+                          setQuickViewProduct(null);
+                        }}
+                        variant="outline"
+                        className="flex-1 border-2 border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white rounded-full py-6"
+                        data-testid="quick-view-full-details"
+                      >
+                        View Full Details
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
