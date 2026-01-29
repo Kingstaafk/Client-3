@@ -48,107 +48,203 @@ const Header = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#E5E5E5] shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between md:justify-start h-16 md:h-20">
-          {/* Mobile: Hamburger on Left */}
-          <button
-            className="md:hidden p-2 -ml-2"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            data-testid="mobile-menu-toggle"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6 text-[#1A1A1A]" />
-            ) : (
+    <>
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#E5E5E5] shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="flex items-center justify-between md:justify-start h-16 md:h-20">
+            {/* Mobile: Hamburger on Left */}
+            <button
+              className="md:hidden p-2 -ml-2"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              data-testid="mobile-menu-toggle"
+            >
               <Menu className="h-6 w-6 text-[#1A1A1A]" />
-            )}
-          </button>
+            </button>
 
-          {/* Logo - Centered on Mobile, Left on Desktop */}
-          <Link 
-            to="/" 
-            className="flex items-center space-x-2 absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0" 
-            data-testid="logo-link"
-          >
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-[#D4AF37] to-[#C5A059] rounded-full flex items-center justify-center">
-              <span className="text-white font-serif font-bold text-lg md:text-xl">L</span>
+            {/* Logo - Centered on Mobile, Left on Desktop */}
+            <Link 
+              to="/" 
+              className="flex items-center space-x-2 absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0" 
+              data-testid="logo-link"
+            >
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-[#D4AF37] to-[#C5A059] rounded-full flex items-center justify-center">
+                <span className="text-white font-serif font-bold text-lg md:text-xl">L</span>
+              </div>
+              <span className="text-xl md:text-2xl font-serif font-medium text-[#1A1A1A]">Luxe Jewels</span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8 ml-auto">
+              <Link
+                to="/products?subcategory=gold"
+                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
+                data-testid="nav-gold"
+              >
+                Gold
+              </Link>
+              <Link
+                to="/products?subcategory=diamond"
+                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
+                data-testid="nav-diamond"
+              >
+                Diamond
+              </Link>
+              <Link
+                to="/products?subcategory=silver"
+                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
+                data-testid="nav-silver"
+              >
+                Silver
+              </Link>
+              <Link
+                to="/sell"
+                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
+                data-testid="nav-sell"
+              >
+                Sell Jewellery
+              </Link>
+            </nav>
+
+            {/* Right Actions */}
+            <div className="flex items-center space-x-2 md:space-x-4 md:ml-8">
+              <Link to="/cart" data-testid="cart-link">
+                <Button variant="ghost" size="icon" className="relative h-9 w-9 md:h-10 md:w-10">
+                  <ShoppingCart className="h-5 w-5 text-[#1A1A1A]" />
+                </Button>
+              </Link>
+
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-9 w-9 md:h-10 md:w-10" data-testid="user-menu-trigger">
+                      <User className="h-5 w-5 text-[#1A1A1A]" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56 bg-white">
+                    <div className="px-2 py-2">
+                      <p className="text-sm font-medium text-[#1A1A1A]">{user.full_name}</p>
+                      <p className="text-xs text-muted-foreground">{user.email}</p>
+                    </div>
+                    <DropdownMenuSeparator />
+                    {user.role === "admin" ? (
+                      <DropdownMenuItem onClick={() => navigate("/admin")} data-testid="admin-dashboard-link">
+                        Admin Dashboard
+                      </DropdownMenuItem>
+                    ) : (
+                      <DropdownMenuItem onClick={() => navigate("/dashboard")} data-testid="customer-dashboard-link">
+                        My Dashboard
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem onClick={handleLogout} data-testid="logout-button">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link to="/login" className="hidden md:block">
+                  <Button
+                    className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-6 py-2 uppercase tracking-widest text-xs font-bold"
+                    data-testid="login-button"
+                  >
+                    Login
+                  </Button>
+                </Link>
+              )}
             </div>
-            <span className="text-xl md:text-2xl font-serif font-medium text-[#1A1A1A]">Luxe Jewels</span>
-          </Link>
+          </div>
+        </div>
+      </header>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8 ml-auto">
-            <Link
-              to="/products?subcategory=gold"
-              className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
-              data-testid="nav-gold"
+      {/* Mobile Sidebar Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-50 md:hidden transition-opacity duration-300"
+          onClick={() => setMobileMenuOpen(false)}
+          data-testid="mobile-menu-overlay"
+        />
+      )}
+
+      {/* Mobile Sidebar Menu */}
+      <div 
+        className={`fixed top-0 left-0 h-full w-80 bg-white z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        data-testid="mobile-menu"
+      >
+        <div className="flex flex-col h-full">
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between p-4 border-b border-[#E5E5E5]">
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-gradient-to-r from-[#D4AF37] to-[#C5A059] rounded-full flex items-center justify-center">
+                <span className="text-white font-serif font-bold text-xl">L</span>
+              </div>
+              <span className="text-xl font-serif font-medium text-[#1A1A1A]">Luxe Jewels</span>
+            </div>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 hover:bg-[#F9F9F7] rounded-full transition-colors"
+              data-testid="mobile-menu-close"
             >
-              Gold
-            </Link>
-            <Link
-              to="/products?subcategory=diamond"
-              className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
-              data-testid="nav-diamond"
-            >
-              Diamond
-            </Link>
-            <Link
-              to="/products?subcategory=silver"
-              className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
-              data-testid="nav-silver"
-            >
-              Silver
-            </Link>
-            <Link
-              to="/sell"
-              className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-xs font-bold"
-              data-testid="nav-sell"
-            >
-              Sell Jewellery
-            </Link>
+              <X className="h-6 w-6 text-[#1A1A1A]" />
+            </button>
+          </div>
+
+          {/* Menu Items */}
+          <nav className="flex-1 overflow-y-auto py-4">
+            <div className="space-y-1 px-3">
+              {menuItems.map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.path}
+                  className="flex items-center space-x-3 px-4 py-3 rounded-lg text-[#1A1A1A] hover:bg-[#F9F9F7] hover:text-[#D4AF37] transition-all duration-200 group"
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid={`mobile-menu-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <item.icon className="h-5 w-5 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+                  <span className="font-medium text-sm">{item.label}</span>
+                </Link>
+              ))}
+            </div>
           </nav>
 
-          {/* Right Actions */}
-          <div className="flex items-center space-x-2 md:space-x-4 md:ml-8">
-            <Link to="/cart" data-testid="cart-link">
-              <Button variant="ghost" size="icon" className="relative h-9 w-9 md:h-10 md:w-10">
-                <ShoppingCart className="h-5 w-5 text-[#1A1A1A]" />
-              </Button>
-            </Link>
-
+          {/* Sidebar Footer */}
+          <div className="border-t border-[#E5E5E5] p-4 space-y-3">
             {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-9 w-9 md:h-10 md:w-10" data-testid="user-menu-trigger">
-                    <User className="h-5 w-5 text-[#1A1A1A]" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56 bg-white">
-                  <div className="px-2 py-2">
-                    <p className="text-sm font-medium text-[#1A1A1A]">{user.full_name}</p>
-                    <p className="text-xs text-muted-foreground">{user.email}</p>
-                  </div>
-                  <DropdownMenuSeparator />
-                  {user.role === "admin" ? (
-                    <DropdownMenuItem onClick={() => navigate("/admin")} data-testid="admin-dashboard-link">
-                      Admin Dashboard
-                    </DropdownMenuItem>
-                  ) : (
-                    <DropdownMenuItem onClick={() => navigate("/dashboard")} data-testid="customer-dashboard-link">
-                      My Dashboard
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem onClick={handleLogout} data-testid="logout-button">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <>
+                <div className="px-4 py-2 bg-[#F9F9F7] rounded-lg">
+                  <p className="text-sm font-medium text-[#1A1A1A]">{user.full_name}</p>
+                  <p className="text-xs text-muted-foreground">{user.email}</p>
+                </div>
+                <Link
+                  to={user.role === "admin" ? "/admin" : "/dashboard"}
+                  className="flex items-center space-x-3 px-4 py-3 rounded-lg text-[#1A1A1A] hover:bg-[#F9F9F7] transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <User className="h-5 w-5 text-[#D4AF37]" />
+                  <span className="font-medium text-sm">My Dashboard</span>
+                </Link>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center space-x-3 px-4 py-3 rounded-lg text-[#1A1A1A] hover:bg-red-50 hover:text-red-600 transition-colors w-full"
+                  data-testid="mobile-logout-button"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span className="font-medium text-sm">Logout</span>
+                </button>
+              </>
             ) : (
-              <Link to="/login" className="hidden md:block">
+              <Link
+                to="/login"
+                className="block w-full"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 <Button
-                  className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-6 py-2 uppercase tracking-widest text-xs font-bold"
-                  data-testid="login-button"
+                  className="w-full bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full py-3 uppercase tracking-widest text-xs font-bold"
+                  data-testid="mobile-login-button"
                 >
                   Login
                 </Button>
@@ -156,53 +252,8 @@ const Header = () => {
             )}
           </div>
         </div>
-
-        {/* Mobile Menu Drawer */}
-        {mobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-[#E5E5E5] bg-white" data-testid="mobile-menu">
-            <div className="flex flex-col space-y-4">
-              <Link
-                to="/products?subcategory=gold"
-                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-sm font-bold py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Gold Collection
-              </Link>
-              <Link
-                to="/products?subcategory=diamond"
-                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-sm font-bold py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Diamond Collection
-              </Link>
-              <Link
-                to="/products?subcategory=silver"
-                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-sm font-bold py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Silver Collection
-              </Link>
-              <Link
-                to="/sell"
-                className="text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200 uppercase tracking-wide text-sm font-bold py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sell Jewellery
-              </Link>
-              {!user && (
-                <Link
-                  to="/login"
-                  className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-6 py-3 text-center uppercase tracking-widest text-xs font-bold transition-all duration-300"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Login
-                </Link>
-              )}
-            </div>
-          </nav>
-        )}
       </div>
-    </header>
+    </>
   );
 };
 
