@@ -28,7 +28,12 @@ const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const { token } = useAuth();
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [priceRange, setPriceRange] = useState([0, 300000]);
+  const [maxPrice, setMaxPrice] = useState(300000);
+  const [sortBy, setSortBy] = useState("newest");
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "",
     subcategory: searchParams.get("subcategory") || "",
@@ -39,6 +44,10 @@ const ProductsPage = () => {
     fetchProducts();
   }, [filters]);
 
+  useEffect(() => {
+    applyFiltersAndSort();
+  }, [products, priceRange, sortBy]);
+
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -47,12 +56,12 @@ const ProductsPage = () => {
       if (filters.subcategory) params.append("subcategory", filters.subcategory);
 
       const response = await axios.get(`${API}/products?${params.toString()}`);
-      let filteredProducts = response.data;
+      let fetchedProducts = response.data;
 
       // Client-side search filtering
       if (filters.search) {
         const searchLower = filters.search.toLowerCase();
-        filteredProducts = filteredProducts.filter(product => 
+        fetchedProducts = fetchedProducts.filter(product => 
           product.name.toLowerCase().includes(searchLower) ||
           product.description.toLowerCase().includes(searchLower) ||
           product.category.toLowerCase().includes(searchLower) ||
@@ -60,13 +69,45 @@ const ProductsPage = () => {
         );
       }
 
-      setProducts(filteredProducts);
+      setProducts(fetchedProducts);
+      
+      // Calculate max price
+      if (fetchedProducts.length > 0) {
+        const max = Math.max(...fetchedProducts.map(p => p.total_price));
+        setMaxPrice(max);
+        setPriceRange([0, max]);
+      }
     } catch (error) {
       console.error("Failed to fetch products:", error);
       toast.error("Failed to load products");
     } finally {
       setLoading(false);
     }
+  };
+
+  const applyFiltersAndSort = () => {
+    let filtered = products.filter(product => 
+      product.total_price >= priceRange[0] && product.total_price <= priceRange[1]
+    );
+
+    // Sort products
+    switch (sortBy) {
+      case "price-low":
+        filtered.sort((a, b) => a.total_price - b.total_price);
+        break;
+      case "price-high":
+        filtered.sort((a, b) => b.total_price - a.total_price);
+        break;
+      case "name-asc":
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "newest":
+      default:
+        filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        break;
+    }
+
+    setFilteredProducts(filtered);
   };
 
   const handleSaveItem = async (productId) => {
