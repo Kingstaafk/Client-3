@@ -100,6 +100,28 @@ class JewelleryStoreAPITester:
             return True
         return False
 
+    def test_admin_signup(self):
+        """Test admin signup (create admin user)"""
+        admin_data = {
+            "email": "admin@luxejewels.com",
+            "password": "admin123",
+            "full_name": "Admin User",
+            "role": "admin"
+        }
+        
+        success, response = self.run_test(
+            "Admin Signup",
+            "POST",
+            "auth/signup",
+            200,
+            data=admin_data
+        )
+        
+        if success and 'access_token' in response:
+            self.admin_token = response['access_token']
+            return True
+        return False
+
     def test_admin_login(self):
         """Test admin login with provided credentials"""
         admin_data = {
