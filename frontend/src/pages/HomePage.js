@@ -141,15 +141,14 @@ const HomePage = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {collections.map((collection, index) => (
               <Link
                 key={index}
                 to={collection.link}
-                className="group relative overflow-hidden rounded-sm h-[400px] shadow-md hover:shadow-xl transition-all duration-300"
+                className="group relative overflow-hidden rounded-sm h-[350px] md:h-[400px] shadow-md hover:shadow-xl transition-all duration-300"
                 data-testid={`collection-${index}`}
-              >
-                <img
+              >\n                <img
                   src={collection.image}
                   alt={collection.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -166,6 +165,72 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* Featured Products Carousel */}
+      {featuredProducts.length > 0 && (
+        <section className="py-16 md:py-24 bg-[#F9F9F7]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            <div className="text-center mb-12">
+              <p className="text-sm font-sans tracking-wide uppercase text-muted-foreground mb-2">Featured</p>
+              <h2 className="text-4xl md:text-5xl font-serif tracking-tight text-[#1A1A1A]">
+                Handpicked for You
+              </h2>
+            </div>
+
+            <div className="relative">
+              <div className="overflow-hidden" ref={emblaRef}>
+                <div className="flex">
+                  {featuredProducts.map((product) => (
+                    <div key={product.id} className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-3">
+                      <Link to={`/products/${product.id}`} className="block">
+                        <div className="bg-white rounded-sm overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                          <div className="relative overflow-hidden">
+                            <img
+                              src={product.image_url}
+                              alt={product.name}
+                              className="w-full h-64 md:h-80 object-cover hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                          <div className="p-4 md:p-6">
+                            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                              {product.subcategory} • {product.category}
+                            </p>
+                            <h3 className="text-lg md:text-xl font-serif text-[#1A1A1A] mb-3 line-clamp-2">
+                              {product.name}
+                            </h3>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xl md:text-2xl font-bold text-[#D4AF37]">
+                                ₹{product.total_price.toLocaleString()}
+                              </span>
+                              <span className="text-xs text-muted-foreground">{product.purity}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Navigation Buttons */}
+              <button
+                onClick={scrollPrev}
+                className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white/90 backdrop-blur-sm hover:bg-[#D4AF37] text-[#1A1A1A] hover:text-white p-3 rounded-full shadow-lg transition-all duration-300 z-10"
+                data-testid="carousel-prev"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              <button
+                onClick={scrollNext}
+                className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white/90 backdrop-blur-sm hover:bg-[#D4AF37] text-[#1A1A1A] hover:text-white p-3 rounded-full shadow-lg transition-all duration-300 z-10"
+                data-testid="carousel-next"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-[#F9F9F7]">
