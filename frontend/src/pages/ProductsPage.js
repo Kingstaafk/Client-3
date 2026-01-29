@@ -93,7 +93,10 @@ const ProductsPage = () => {
             Our Collection
           </h1>
           <p className="text-base md:text-lg text-muted-foreground">
-            Explore our exquisite range of handcrafted jewellery
+            {filters.search 
+              ? `Search results for "${filters.search}"`
+              : "Explore our exquisite range of handcrafted jewellery"
+            }
           </p>
         </div>
 
