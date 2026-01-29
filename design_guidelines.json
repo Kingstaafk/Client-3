@@ -1,0 +1,152 @@
+{
+  "identity": {
+    "name": "E1: The Anti-AI Designer",
+    "mission": "Create a premium, trustworthy, and elegant jewellery e-commerce experience inspired by Tanishq.",
+    "tone": "Luxury, Calm, Professional, Trustworthy, Heritage",
+    "target_audience": "Premium jewellery buyers, investors, gift shoppers"
+  },
+  "typography": {
+    "primary_font": "Playfair Display",
+    "secondary_font": "Lato",
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-serif tracking-tight",
+      "h2": "text-4xl md:text-5xl font-serif tracking-tight",
+      "h3": "text-2xl md:text-3xl font-serif",
+      "body": "text-base md:text-lg font-sans leading-relaxed",
+      "caption": "text-sm font-sans tracking-wide uppercase text-muted-foreground"
+    },
+    "weights": {
+      "heading": "font-medium",
+      "body": "font-light"
+    }
+  },
+  "colors": {
+    "palette": {
+      "primary": "#D4AF37",
+      "primary_foreground": "#FFFFFF",
+      "secondary": "#F9F9F7",
+      "secondary_foreground": "#1A1A1A",
+      "accent": "#C5A059",
+      "background": "#FFFFFF",
+      "foreground": "#1A1A1A",
+      "muted": "#F5F5F5",
+      "muted_foreground": "#666666",
+      "border": "#E5E5E5",
+      "input": "#F0F0F0",
+      "ring": "#D4AF37"
+    },
+    "usage": {
+      "primary": "Call to actions, price highlights, active states",
+      "secondary": "Section backgrounds, card backgrounds",
+      "accent": "Borders, icons, subtle highlights",
+      "text": "Dark charcoal for readability, never pure black"
+    }
+  },
+  "layout": {
+    "grid_system": "Use 'Bento' grids for collections. Asymmetrical layouts to showcase products as art.",
+    "spacing": "Generous spacing. Use p-12, p-16, p-24 for section padding. Give products breathing room.",
+    "container": "max-w-7xl mx-auto px-4 md:px-8",
+    "z_index": {
+      "header": 50,
+      "modal": 100,
+      "dropdown": 40
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full px-8 py-3 transition-all duration-300 shadow-md hover:shadow-lg uppercase tracking-widest text-xs font-bold",
+      "secondary": "bg-transparent border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-white rounded-full px-8 py-3 transition-all duration-300 uppercase tracking-widest text-xs font-bold",
+      "ghost": "text-[#1A1A1A] hover:text-[#D4AF37] transition-colors duration-200"
+    },
+    "cards": {
+      "product": "group relative bg-white rounded-sm overflow-hidden transition-all duration-300 hover:shadow-xl border border-transparent hover:border-[#D4AF37]/20",
+      "feature": "bg-[#F9F9F7] p-8 rounded-sm text-center hover:bg-white hover:shadow-lg transition-all duration-300"
+    },
+    "inputs": {
+      "default": "bg-[#F9F9F7] border-transparent focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] rounded-sm px-4 py-3 transition-all duration-200"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": "shadow-[0_4px_20px_rgba(0,0,0,0.05)]",
+    "borders": "border border-[#E5E5E5]",
+    "radius": "rounded-sm (for a classic, sharp luxury feel) or rounded-md (for softer feel). Recommend rounded-sm for Tanishq vibe.",
+    "gradients": "Avoid loud gradients. Use subtle gold gradients for text or borders only: 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059]'",
+    "textures": "Subtle noise or paper texture on #F9F9F7 backgrounds to add depth."
+  },
+  "media": {
+    "image_style": "High-resolution, editorial style. Models should look elegant. Product shots on clean white or textured stone backgrounds.",
+    "icons": "Use thin, elegant icons (Phosphor Icons - Light or Thin weight). Gold or Charcoal color."
+  },
+  "image_urls": {
+    "hero": [
+      {
+        "url": "https://images.unsplash.com/photo-1522001947148-8b4dfe064edc",
+        "description": "Elegant woman with jewellery, wide shot for hero banner",
+        "category": "hero"
+      }
+    ],
+    "products": [
+      {
+        "url": "https://images.unsplash.com/photo-1728646995777-6dbb354691e3",
+        "description": "Gold necklace on model in white dress",
+        "category": "necklace"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1583791030450-950c8e4a2a8e",
+        "description": "Gold pendant on white textile",
+        "category": "necklace"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1696774665695-2f237304c3b0",
+        "description": "Diamond ring on hand",
+        "category": "ring"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1762019313711-8b5d1e4f7ba4",
+        "description": "Blue sapphire ring luxury",
+        "category": "ring"
+      },
+      {
+        "url": "https://images.pexels.com/photos/12194350/pexels-photo-12194350.jpeg",
+        "description": "Minimalist gold earrings",
+        "category": "earrings"
+      },
+      {
+        "url": "https://images.pexels.com/photos/8398911/pexels-photo-8398911.jpeg",
+        "description": "Diamond bracelet",
+        "category": "bracelet"
+      },
+      {
+        "url": "https://images.pexels.com/photos/2064505/pexels-photo-2064505.jpeg",
+        "description": "Gold bangles indian style",
+        "category": "bangles"
+      }
+    ],
+    "trust": [
+      {
+        "url": "https://images.unsplash.com/photo-1566041510394-cf7c8fe21800",
+        "description": "Marble texture for background/trust section",
+        "category": "texture"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Use 'Playfair Display' for all Headings. Import it from Google Fonts.",
+    "Use 'Lato' for body text.",
+    "Implement a 'Mega Menu' for navigation (Gold, Diamond, Collections, etc.).",
+    "The 'Sell Jewellery' page should be a clean, multi-step form wizard.",
+    "Product Cards must have a 'Quick View' button on hover.",
+    "Use the Gold color (#D4AF37) sparingly for impact (Buttons, Price, Borders). Do not overuse.",
+    "Ensure the 'Trust' section (Certified, Lifetime Exchange, etc.) is prominent on the Home Page.",
+    "For the 'Hero' section, use the provided model image with a text overlay on the left or right (asymmetrical).",
+    "Use 'sonner' for all toast notifications.",
+    "Use 'lucide-react' for icons, but style them to be thin and elegant."
+  ],
+  "universal_guidelines": [
+    "Do not use generic centered layouts. Use asymmetry.",
+    "Use 2-3x more spacing than typical designs.",
+    "Every interaction needs micro-animations.",
+    "Use 'sonner' for toasts.",
+    "All interactive elements must have 'data-testid'."
+  ]
+}
