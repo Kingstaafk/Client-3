@@ -15,6 +15,30 @@ const Header = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Fetch cart count
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+          const response = await fetch(`${BACKEND_URL}/api/cart`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setCartCount(data.length);
+          }
+        } catch (error) {
+          console.error("Failed to fetch cart count:", error);
+        }
+      }
+    };
+    fetchCartCount();
+  }, []);
 
   // Close menu when route changes
   useEffect(() => {
@@ -38,13 +62,37 @@ const Header = () => {
     navigate("/");
   };
 
-  const menuItems = [
-    { label: "Home", path: "/", icon: Home },
-    { label: "All Products", path: "/products", icon: ShoppingBag },
-    { label: "Gold Collection", path: "/products?subcategory=gold", icon: Sparkles },
-    { label: "Diamond Collection", path: "/products?subcategory=diamond", icon: Gem },
-    { label: "Silver Collection", path: "/products?subcategory=silver", icon: CircleDollarSign },
-    { label: "Sell Jewellery", path: "/sell", icon: CircleDollarSign },
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchQuery)}`);
+      setMobileMenuOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  const menuSections = [
+    {
+      title: "Shop",
+      items: [
+        { label: "Home", path: "/", icon: Home },
+        { label: "All Products", path: "/products", icon: ShoppingBag },
+      ]
+    },
+    {
+      title: "Collections",
+      items: [
+        { label: "Gold Collection", path: "/products?subcategory=gold", icon: Sparkles },
+        { label: "Diamond Collection", path: "/products?subcategory=diamond", icon: Gem },
+        { label: "Silver Collection", path: "/products?subcategory=silver", icon: CircleDollarSign },
+      ]
+    },
+    {
+      title: "Services",
+      items: [
+        { label: "Sell Jewellery", path: "/sell", icon: CircleDollarSign },
+      ]
+    }
   ];
 
   return (
