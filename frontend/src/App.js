@@ -44,48 +44,51 @@ const PrivateRoute = ({ children, adminOnly = false }) => {
 
 function AppContent() {
   return (
-    <div className="App">
+    <div className="App flex flex-col min-h-screen">
       <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route
-          path="/checkout"
-          element={
-            <PrivateRoute>
-              <CheckoutPage />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <CustomerDashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute adminOnly>
-              <AdminDashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/sell"
-          element={
-            <PrivateRoute>
-              <SellJewelleryPage />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/checkout"
+            element={
+              <PrivateRoute>
+                <CheckoutPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <CustomerDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute adminOnly>
+                <AdminDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/sell"
+            element={
+              <PrivateRoute>
+                <SellJewelleryPage />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </main>
+      <Footer />
       <Toaster position="top-center" richColors />
     </div>
   );
