@@ -10,6 +10,24 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const HomePage = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+  }, []);
+
+  const fetchFeaturedProducts = async () => {
+    try {
+      const response = await axios.get(`${API}/products`);
+      setFeaturedProducts(response.data.slice(0, 6)); // Get first 6 products
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
+
+  const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
+  const scrollNext = () => emblaApi && emblaApi.scrollNext();
   const collections = [
     {
       name: "Gold Collection",
