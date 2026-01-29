@@ -25,6 +25,7 @@ const ProductsPage = () => {
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "",
     subcategory: searchParams.get("subcategory") || "",
+    search: searchParams.get("search") || "",
   });
 
   useEffect(() => {
@@ -39,7 +40,20 @@ const ProductsPage = () => {
       if (filters.subcategory) params.append("subcategory", filters.subcategory);
 
       const response = await axios.get(`${API}/products?${params.toString()}`);
-      setProducts(response.data);
+      let filteredProducts = response.data;
+
+      // Client-side search filtering
+      if (filters.search) {
+        const searchLower = filters.search.toLowerCase();
+        filteredProducts = filteredProducts.filter(product => 
+          product.name.toLowerCase().includes(searchLower) ||
+          product.description.toLowerCase().includes(searchLower) ||
+          product.category.toLowerCase().includes(searchLower) ||
+          product.subcategory.toLowerCase().includes(searchLower)
+        );
+      }
+
+      setProducts(filteredProducts);
     } catch (error) {
       console.error("Failed to fetch products:", error);
       toast.error("Failed to load products");
