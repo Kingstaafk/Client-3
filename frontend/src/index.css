@@ -94,5 +94,15 @@ code {
 }
 
 .product-card {
-    @apply group relative bg-white rounded-sm overflow-hidden transition-all duration-300 hover:shadow-xl border border-transparent hover:border-[#D4AF37]/20;
+    position: relative;
+    background-color: white;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.product-card:hover {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    border-color: rgba(212, 175, 55, 0.2);
 }
