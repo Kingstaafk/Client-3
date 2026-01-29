@@ -113,18 +113,18 @@ const HomePage = () => {
       </section>
 
       {/* Trust Section */}
-      <section className="py-16 md:py-24 bg-[#F9F9F7]">
+      <section className="py-12 md:py-16 lg:py-24 bg-[#F9F9F7]">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {trustFeatures.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-sm text-center hover:shadow-lg transition-all duration-300"
+                className="bg-white p-6 md:p-8 rounded-sm text-center hover:shadow-lg transition-all duration-300"
                 data-testid={`trust-feature-${index}`}
               >
-                <feature.icon className="h-10 w-10 text-[#D4AF37] mx-auto mb-4" strokeWidth={1.5} />
-                <h3 className="text-xl font-serif text-[#1A1A1A] mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <feature.icon className="h-8 w-8 md:h-10 md:w-10 text-[#D4AF37] mx-auto mb-3 md:mb-4" strokeWidth={1.5} />
+                <h3 className="text-lg md:text-xl font-serif text-[#1A1A1A] mb-2">{feature.title}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground">{feature.description}</p>
               </div>
             ))}
           </div>
