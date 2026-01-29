@@ -155,6 +155,16 @@ const Header = () => {
 
             {/* Right Actions */}
             <div className="flex items-center space-x-2 md:space-x-4 md:ml-8">
+              {/* Wishlist/Saved Items */}
+              {user && (
+                <Link to="/dashboard" data-testid="wishlist-link">
+                  <Button variant="ghost" size="icon" className="relative h-9 w-9 md:h-10 md:w-10 hidden sm:flex">
+                    <Heart className="h-5 w-5 text-[#1A1A1A]" />
+                  </Button>
+                </Link>
+              )}
+              
+              {/* Cart with Badge */}
               <Link to="/cart" data-testid="cart-link">
                 <Button variant="ghost" size="icon" className="relative h-9 w-9 md:h-10 md:w-10">
                   <ShoppingCart className="h-5 w-5 text-[#1A1A1A]" />
