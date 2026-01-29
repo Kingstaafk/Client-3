@@ -489,6 +489,7 @@ class JewelleryStoreAPITester:
         # Authentication Tests
         print("\n📝 Authentication Tests:")
         self.test_customer_signup()
+        self.test_admin_signup()  # Create admin user first
         self.test_admin_login()
         self.test_get_current_user()
         
