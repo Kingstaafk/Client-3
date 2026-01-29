@@ -305,14 +305,29 @@ const Header = () => {
                   <p className="text-sm font-medium text-[#1A1A1A]">{user.full_name}</p>
                   <p className="text-xs text-muted-foreground">{user.email}</p>
                 </div>
-                <Link
-                  to={user.role === "admin" ? "/admin" : "/dashboard"}
-                  className="flex items-center space-x-3 px-4 py-3 rounded-lg text-[#1A1A1A] hover:bg-[#F9F9F7] transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <User className="h-5 w-5 text-[#D4AF37]" />
-                  <span className="font-medium text-sm">My Dashboard</span>
-                </Link>
+                
+                {/* Quick Actions */}
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    to={user.role === "admin" ? "/admin" : "/dashboard"}
+                    className="flex flex-col items-center justify-center px-3 py-3 rounded-lg bg-[#F9F9F7] hover:bg-[#D4AF37] hover:text-white transition-colors group"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-testid="sidebar-dashboard-button"
+                  >
+                    <User className="h-5 w-5 mb-1 text-[#D4AF37] group-hover:text-white" />
+                    <span className="text-xs font-medium">Dashboard</span>
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    className="flex flex-col items-center justify-center px-3 py-3 rounded-lg bg-[#F9F9F7] hover:bg-[#D4AF37] hover:text-white transition-colors group"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-testid="sidebar-wishlist-button"
+                  >
+                    <Heart className="h-5 w-5 mb-1 text-[#D4AF37] group-hover:text-white" />
+                    <span className="text-xs font-medium">Wishlist</span>
+                  </Link>
+                </div>
+                
                 <button
                   onClick={() => {
                     handleLogout();
