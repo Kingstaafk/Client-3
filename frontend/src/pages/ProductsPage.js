@@ -40,6 +40,15 @@ const ProductsPage = () => {
     search: searchParams.get("search") || "",
   });
 
+  // Update filters when URL search params change
+  useEffect(() => {
+    setFilters({
+      category: searchParams.get("category") || "",
+      subcategory: searchParams.get("subcategory") || "",
+      search: searchParams.get("search") || "",
+    });
+  }, [searchParams]);
+
   useEffect(() => {
     fetchProducts();
   }, [filters]);
