@@ -57,14 +57,16 @@ const ProductsPage = () => {
     applyFiltersAndSort();
   }, [products, priceRange, sortBy]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = async (retryCount = 0) => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
       if (filters.category) params.append("category", filters.category);
       if (filters.subcategory) params.append("subcategory", filters.subcategory);
 
-      const response = await axios.get(`${API}/products?${params.toString()}`);
+      const response = await axios.get(`${API}/products?${params.toString()}`, {
+        timeout: 10000, // 10 second timeout
+      });
       let fetchedProducts = response.data;
 
       // Client-side search filtering
@@ -85,12 +87,25 @@ const ProductsPage = () => {
         const max = Math.max(...fetchedProducts.map(p => p.total_price));
         setMaxPrice(max);
         setPriceRange([0, max]);
+      } else {
+        setMaxPrice(300000);
+        setPriceRange([0, 300000]);
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
       console.error("Error details:", error.response?.data || error.message);
-      toast.error(error.response?.data?.detail || "Failed to load products. Please try again.");
+      
+      // Retry once if it's a network error
+      if (retryCount === 0 && (error.code === 'ECONNABORTED' || error.message.includes('timeout') || error.message.includes('Network'))) {
+        console.log("Retrying products fetch...");
+        setTimeout(() => fetchProducts(1), 1000);
+        return;
+      }
+      
+      toast.error(error.response?.data?.detail || "Failed to load products. Please refresh the page.");
       setProducts([]);
+      setMaxPrice(300000);
+      setPriceRange([0, 300000]);
     } finally {
       setLoading(false);
     }
