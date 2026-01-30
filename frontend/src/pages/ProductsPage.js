@@ -88,7 +88,9 @@ const ProductsPage = () => {
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
-      toast.error("Failed to load products");
+      console.error("Error details:", error.response?.data || error.message);
+      toast.error(error.response?.data?.detail || "Failed to load products. Please try again.");
+      setProducts([]);
     } finally {
       setLoading(false);
     }
