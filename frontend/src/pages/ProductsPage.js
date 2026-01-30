@@ -295,17 +295,31 @@ const ProductsPage = () => {
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-xl text-muted-foreground mb-4">No products found</p>
-            <Button
-              onClick={() => {
-                setFilters({ category: "", subcategory: "", search: "" });
-                setPriceRange([0, maxPrice]);
-                navigate("/products");
-              }}
-              className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full"
-            >
-              Clear Filters
-            </Button>
+            <p className="text-xl text-muted-foreground mb-4">
+              {products.length === 0 ? "No products available" : "No products found"}
+            </p>
+            {products.length === 0 ? (
+              <Button
+                onClick={() => {
+                  fetchProducts();
+                }}
+                className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full"
+                data-testid="retry-button"
+              >
+                Retry Loading
+              </Button>
+            ) : (
+              <Button
+                onClick={() => {
+                  setFilters({ category: "", subcategory: "", search: "" });
+                  setPriceRange([0, maxPrice]);
+                  navigate("/products");
+                }}
+                className="bg-[#D4AF37] text-white hover:bg-[#C5A059] rounded-full"
+              >
+                Clear Filters
+              </Button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
