@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AuthContext = createContext();
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:8000";
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "https://client-3-b9sm.onrender.com";
 const API = `${BACKEND_URL}/api`;
 
 export const useAuth = () => {
