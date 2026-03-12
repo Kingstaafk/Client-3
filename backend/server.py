@@ -317,6 +317,18 @@ async def create_product(product: ProductBase, admin: User = Depends(get_current
     return prod
 
 
+@api_router.get("/products/{product_id}", response_model=Product)
+async def get_product(product_id: str):
+    product = await db.products.find_one({"id": product_id}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    if isinstance(product.get("created_at"), str):
+        product["created_at"] = datetime.fromisoformat(product["created_at"])
+
+    return Product(**product)
+
+
 # =============================
 # CART ROUTES
 # =============================
