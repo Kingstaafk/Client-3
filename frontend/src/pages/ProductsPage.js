@@ -19,8 +19,9 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import { getApiErrorMessage } from "@/lib/errorMessage";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:8000";
 const API = `${BACKEND_URL}/api`;
 
 const ProductsPage = () => {
@@ -102,7 +103,7 @@ const ProductsPage = () => {
         return;
       }
       
-      toast.error(error.response?.data?.detail || "Failed to load products. Please refresh the page.");
+      toast.error(getApiErrorMessage(error, "Failed to load products. Please refresh the page."));
       setProducts([]);
       setMaxPrice(300000);
       setPriceRange([0, 300000]);

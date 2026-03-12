@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 class JewelleryStoreAPITester:
-    def __init__(self, base_url="https://gemgallery-3.preview.emergentagent.com"):
+    def __init__(self, base_url="http://127.0.0.1:8000"):
         self.base_url = base_url
         self.api_url = f"{base_url}/api"
         self.customer_token = None

@@ -12,6 +12,7 @@ import uuid
 from datetime import datetime, timezone, timedelta
 from passlib.context import CryptContext
 from jose import JWTError, jwt
+from contextlib import asynccontextmanager
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -28,7 +29,14 @@ SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'your-secret-key-change-in-product
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    try:
+        yield
+    finally:
+        client.close()
+
+app = FastAPI(lifespan=lifespan)
 api_router = APIRouter(prefix="/api")
 
 # ============ MODELS ============
@@ -510,7 +518,3 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()

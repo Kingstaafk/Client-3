@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { IndianRupee, Weight, Award } from "lucide-react";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:8000";
 const API = `${BACKEND_URL}/api`;
 
 const SellJewelleryPage = () => {

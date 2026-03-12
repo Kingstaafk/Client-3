@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { getApiErrorMessage } from "@/lib/errorMessage";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const LoginPage = () => {
       navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
-      toast.error(error.response?.data?.detail || "Login failed. Please check your credentials.");
+      toast.error(getApiErrorMessage(error, "Login failed. Please check your credentials."));
     } finally {
       setLoading(false);
     }

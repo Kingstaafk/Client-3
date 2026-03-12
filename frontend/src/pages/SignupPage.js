@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { getApiErrorMessage } from "@/lib/errorMessage";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const SignupPage = () => {
       navigate("/");
     } catch (error) {
       console.error("Signup failed:", error);
-      toast.error(error.response?.data?.detail || "Signup failed. Please try again.");
+      toast.error(getApiErrorMessage(error, "Signup failed. Please try again."));
     } finally {
       setLoading(false);
     }
